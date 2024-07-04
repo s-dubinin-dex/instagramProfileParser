@@ -4,8 +4,6 @@ import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
-import static com.codeborne.selenide.Selenide.page;
-
 public class LoginPage {
     @FindBy(how = How.NAME, using = "username")
     private SelenideElement loginField;
@@ -31,8 +29,8 @@ public class LoginPage {
         return this;
     }
 
-    public MainPage login(String login, String password){
+    public void login(String login, String password) throws InterruptedException {
         setLogin(login).setPassword(password).clickLoginButton();
-        return page(MainPage.class);
+        Thread.sleep(5000);
     }
 }
