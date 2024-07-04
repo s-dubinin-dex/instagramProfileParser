@@ -29,7 +29,7 @@ public class FileSystem {
             InputStream inputStream = url.openStream();
 
             // Создаем поток для сохранения файла
-            OutputStream outputStream = new FileOutputStream(filePath + "\\image.jpg");
+            OutputStream outputStream = new FileOutputStream(filePath);
 
             // Читаем данные из InputStream и записываем в OutputStream
             byte[] buffer = new byte[4096];

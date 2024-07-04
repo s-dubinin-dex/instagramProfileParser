@@ -16,6 +16,7 @@ public class ProfilePage {
     private static final String PROFILE_PATH = BASE_PATH_TO_FOLDER_RESULTS + "\\" + PROFILE_TO_PARSE;
     private static final String SCROLL_STRATEGY = Main.getScrollStrategy();
 
+    private static final String PROFILE_AVATAR_LOCATOR = "section.x78zum5.xdt5ytf.x1iyjqo2.xg6iff7 img.xpdipgo.x972fbf.xcfux6l.x1qhh985.xm0m39n.xk390pu.x5yr21d.xdj266r.x11i5rnm.xat24cr.x1mh8g0r.xl1xv1r.xexx8yu.x4uap5.x18d9i69.xkhd6sd.x11njtxf.xh8yej3";
     private static final String[] PROFILE_DATA_LOCATORS = new String[]{
             ".x1lliihq.x1plvlek.xryxfnj.x1n2onr6.x193iq5w.xeuugli.x1fj9vlw.x13faqbe.x1vvkbs.x1s928wv.xhkezso.x1gmr53x.x1cpjm7i.x1fgarty.x1943h6x.x1i0vuye.xvs91rp.x1s688f.x5n08af.x10wh9bi.x1wdrske.x8viiok.x18hxmgj",
             "div._ap3a._aaco._aacu._aacy._aad6._aade",
@@ -42,6 +43,10 @@ public class ProfilePage {
     }
 
     private void parseProfileInfo(){
+
+        SelenideElement avatar = $(PROFILE_AVATAR_LOCATOR);
+        String avatarSrc = avatar.getAttribute("src");
+        FileSystem.createImage(PROFILE_PATH + "\\Avatar.jpg", avatarSrc);
 
         // TODO: Добавить получение аватара
 
@@ -125,7 +130,7 @@ public class ProfilePage {
             FileSystem.createTxt(postPath + "\\Post description.txt", postDescription);
 
             String imgSrc = firstPhoto.getAttribute("src");
-            FileSystem.createImage(postPath, imgSrc);
+            FileSystem.createImage(postPath + "\\image.jpg", imgSrc);
 
             postNumber++;
         }
