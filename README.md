@@ -1,1 +1,1 @@
-# instagramPageParser
+# instagramProfileParser
