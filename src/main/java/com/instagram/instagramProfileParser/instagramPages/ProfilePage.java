@@ -115,9 +115,29 @@ public class ProfilePage {
     }
 
     private void scrollProfilePageNTimes(int scrollTimes) throws InterruptedException, NullPointerException {
+
+        // Переменная для хранения предыдущей высоты страницы
+        long lastHeight = (long) executeJavaScript("return document.body.scrollHeight");
+
         for (int scrollIteration = 0; scrollIteration < scrollTimes; scrollIteration++){
+
+            // Оптимизировано, чтобы не терять время, если страница закончилась
+
+            // Прокручиваем страницу вниз
             executeJavaScript("window.scrollTo(0, document.body.scrollHeight);");
             Thread.sleep(2000);
+
+            // Получаем новую высоту страницы
+            long newHeight = (long) executeJavaScript("return document.body.scrollHeight");
+
+            // Если новая высота равна предыдущей, значит новых элементов больше нет
+            if (newHeight == lastHeight) {
+                break;
+            }
+
+            // Обновляем предыдущую высоту страницы
+            lastHeight = newHeight;
+
         }
     }
 
