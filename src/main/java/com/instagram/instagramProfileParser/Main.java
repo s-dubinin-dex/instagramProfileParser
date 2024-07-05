@@ -3,6 +3,7 @@ package com.instagram.instagramProfileParser;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
 import com.instagram.instagramProfileParser.instagramPages.LoginPage;
+import com.instagram.instagramProfileParser.instagramPages.MainPage;
 import com.instagram.instagramProfileParser.instagramPages.ProfilePage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +15,7 @@ import static com.codeborne.selenide.Selenide.open;
 public class Main {
     private static String USER_LOGIN;
     private static String USER_PASSWORD;
-    private static String PROFILE_TO_PARSE;
+    private static String PROFILES_TO_PARSE;
     // TODO: заменить SCROLL_STRATEGY на передачу количества постов.
     // Если all - крутим до конца,
     // если число - крутим, пока selenide не вернёт количество элементов по локатору поста >= кол-ва постов
@@ -33,10 +34,14 @@ public class Main {
         setBrowserSettings();
 
         LoginPage loginPage = open("https://www.instagram.com/", LoginPage.class);
-        loginPage.login(USER_LOGIN, USER_PASSWORD);
+        MainPage mainPage = loginPage.login(USER_LOGIN, USER_PASSWORD);
 
-        ProfilePage profilePage = open("https://www.instagram.com/" + PROFILE_TO_PARSE, ProfilePage.class);
-        profilePage.parseProfile();
+        String[] profilesToParse = PROFILES_TO_PARSE.split(";");
+
+        for (String profileToParse: profilesToParse){
+            ProfilePage profilePage = mainPage.goToProfile(profileToParse);
+            profilePage.parseProfile();
+        }
 
         WebDriverRunner.closeWebDriver();
     }
@@ -49,8 +54,8 @@ public class Main {
         USER_PASSWORD = userPassword;
     }
 
-    private static void setProfileToParse(String profileToParse) {
-        PROFILE_TO_PARSE = profileToParse;
+    private static void setProfilesToParse(String profilesToParse) {
+        PROFILES_TO_PARSE = profilesToParse;
     }
 
     private static void setScrollStrategy(String scrollMode) {
@@ -71,10 +76,6 @@ public class Main {
 
     public static String getOutputPath() {
         return OUTPUT_PATH;
-    }
-
-    public static String getProfileToParse() {
-        return PROFILE_TO_PARSE;
     }
 
     public static String getScrollMode() {
@@ -99,7 +100,7 @@ public class Main {
                         setUserPassword(parameter);
                         break;
                     case 'T' :
-                        setProfileToParse(parameter);
+                        setProfilesToParse(parameter);
                         break;
                     case 'S' :
                         setScrollStrategy(parameter);

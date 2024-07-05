@@ -13,9 +13,10 @@ import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Selenide.$;
 
 public class ProfilePage {
-    private static final String PROFILE_TO_PARSE = Main.getProfileToParse();
+    private String profileToParse;
+    private String osProfilePath;
+
     private static final String BASE_PATH_TO_FOLDER_RESULTS = Main.getOutputPath();
-    private static final String PROFILE_PATH = BASE_PATH_TO_FOLDER_RESULTS + "\\" + PROFILE_TO_PARSE;
     private static final String SCROLL_MODE = Main.getScrollMode();
     private static final String GALLERY_MODE = Main.getGalleryMode();
 
@@ -36,12 +37,16 @@ public class ProfilePage {
     private static final String OPENED_GALLERY_PHOTO_LOCATOR_THE_ONLY_ONE = "div >div > div > div._aagu > div > img[crossorigin=\"anonymous\"]";
     private static final String OPENED_GALLERY_NEXT_BUTTON_LOCATOR = "button._afxw._al46._al47";
 
+    public void setProfileToParse(String profileToParse) {
+        this.profileToParse = profileToParse;
+        this.osProfilePath = BASE_PATH_TO_FOLDER_RESULTS + "\\" + this.profileToParse;
+    }
 
     public void parseProfile() throws IOException, InterruptedException {
 
         Thread.sleep(5000);
 
-        FileSystem.createFolder(PROFILE_PATH);
+        FileSystem.createFolder(this.osProfilePath);
 
         parseProfileInfo();
 
@@ -55,7 +60,7 @@ public class ProfilePage {
 
         SelenideElement avatar = $(PROFILE_AVATAR_LOCATOR);
         String avatarSrc = avatar.getAttribute("src");
-        FileSystem.createImage(PROFILE_PATH + "\\avatar.jpg", avatarSrc);
+        FileSystem.createImage(this.osProfilePath + "\\avatar.jpg", avatarSrc);
 
         StringBuilder profileInfo = new StringBuilder();
 
@@ -75,7 +80,7 @@ public class ProfilePage {
             }
         }
 
-        FileSystem.createTxt(PROFILE_PATH + "\\profile_description.txt", profileInfo.toString());
+        FileSystem.createTxt(this.profileToParse + "\\profile_description.txt", profileInfo.toString());
     };
 
     private void scrollProfilePage() throws InterruptedException {
@@ -149,7 +154,7 @@ public class ProfilePage {
         if (GALLERY_MODE.equals("first")){
             int postNumber = 0;
             for (SelenideElement post: posts){
-                String postPath = BASE_PATH_TO_FOLDER_RESULTS + "\\" + PROFILE_TO_PARSE + "\\" + postNumber;
+                String postPath = BASE_PATH_TO_FOLDER_RESULTS + "\\" + this.profileToParse + "\\" + postNumber;
                 FileSystem.createFolder(postPath);
 
                 String postUrl = post.getAttribute("href");
@@ -175,7 +180,7 @@ public class ProfilePage {
 
             for (String postUrl: postURls){
 
-                String postPath = BASE_PATH_TO_FOLDER_RESULTS + "\\" + PROFILE_TO_PARSE + "\\" + postNumber;
+                String postPath = BASE_PATH_TO_FOLDER_RESULTS + "\\" + this.profileToParse + "\\" + postNumber;
                 FileSystem.createFolder(postPath);
 
                 FileSystem.createTxt(postPath + "\\post_url.txt", postUrl);

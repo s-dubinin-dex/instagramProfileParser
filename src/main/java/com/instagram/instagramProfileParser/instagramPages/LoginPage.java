@@ -44,8 +44,9 @@ public class LoginPage {
         return this;
     }
 
-    public void login(String login, String password) throws InterruptedException {
+    public MainPage login(String login, String password) throws InterruptedException {
         setLogin(login).setPassword(password).clickLoginButton();
         Thread.sleep(5000);
+        return page(MainPage.class);
     }
 }
