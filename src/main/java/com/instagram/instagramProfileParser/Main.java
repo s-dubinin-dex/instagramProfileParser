@@ -18,7 +18,7 @@ public class Main {
     // TODO: заменить SCROLL_STRATEGY на передачу количества постов.
     // Если all - крутим до конца,
     // если число - крутим, пока selenide не вернёт количество элементов по локатору поста >= кол-ва постов
-    private static String SCROLL_STRATEGY;
+    private static String SCROLL_MODE;
     private static String OUTPUT_PATH;
     private static String BROWSER_MODE;
 
@@ -52,8 +52,8 @@ public class Main {
         PROFILE_TO_PARSE = profileToParse;
     }
 
-    private static void setScrollStrategy(String scrollStrategy) {
-        SCROLL_STRATEGY = scrollStrategy;
+    private static void setScrollStrategy(String scrollMode) {
+        SCROLL_MODE = scrollMode;
     }
 
     private static void setOutputPath(String outputPath) {
@@ -72,8 +72,8 @@ public class Main {
         return PROFILE_TO_PARSE;
     }
 
-    public static String getScrollStrategy() {
-        return SCROLL_STRATEGY;
+    public static String getScrollMode() {
+        return SCROLL_MODE;
     }
 
     private static void processCLIArgs(String[] args){

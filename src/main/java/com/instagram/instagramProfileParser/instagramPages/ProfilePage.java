@@ -15,6 +15,7 @@ public class ProfilePage {
     private static final String BASE_PATH_TO_FOLDER_RESULTS = Main.getOutputPath();
     private static final String PROFILE_PATH = BASE_PATH_TO_FOLDER_RESULTS + "\\" + PROFILE_TO_PARSE;
     private static final String SCROLL_STRATEGY = Main.getScrollStrategy();
+    private static final String SCROLL_MODE = Main.getScrollMode();
 
     private static final String PROFILE_AVATAR_LOCATOR = "section.x78zum5.xdt5ytf.x1iyjqo2.xg6iff7 img.xpdipgo.x972fbf.xcfux6l.x1qhh985.xm0m39n.xk390pu.x5yr21d.xdj266r.x11i5rnm.xat24cr.x1mh8g0r.xl1xv1r.xexx8yu.x4uap5.x18d9i69.xkhd6sd.x11njtxf.xh8yej3";
     private static final String[] PROFILE_DATA_LOCATORS = new String[]{
@@ -71,11 +72,11 @@ public class ProfilePage {
     };
 
     private void scrollProfilePage() throws InterruptedException {
-        if (SCROLL_STRATEGY.equals("inf")){
+        if (SCROLL_MODE.equals("inf")){
             scrollProfilePageToTheEndOfPage();
         }
         else {
-            int scrollTimes = Integer.parseInt(SCROLL_STRATEGY);
+            int scrollTimes = Integer.parseInt(SCROLL_MODE);
             scrollProfilePageNTimes(scrollTimes);
 
         }
