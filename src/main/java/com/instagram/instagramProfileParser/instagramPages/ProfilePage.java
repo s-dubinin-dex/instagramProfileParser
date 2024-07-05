@@ -182,8 +182,19 @@ public class ProfilePage {
                 int imgNum = 0;
                 open(postUrl);
 
-                String postDescription = $(OPENED_POST_LOCATOR).getText();
-                FileSystem.createTxt(postPath + "\\post_description.txt", postDescription);
+                try {
+                    if ($(OPENED_POST_LOCATOR).exists()){
+                        String postDescription = $(OPENED_POST_LOCATOR).getText();
+                        FileSystem.createTxt(postPath + "\\post_description.txt", postDescription);
+                    }
+                    else {
+                        System.out.println("Элемент не найден по локатору: " + OPENED_POST_LOCATOR + "; У поста отсутствует описание");
+                        FileSystem.createTxt(postPath + "\\post_description.txt", "Пост без описания");
+                    }
+
+                } catch (Exception e) {
+                    System.out.println("Ошибка при обработке элемента: " + e.getMessage());
+                }
 
                 while (true){
                     Thread.sleep(500);
