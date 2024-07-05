@@ -25,7 +25,8 @@ public class ProfilePage {
             "div > a> span> span.x1lliihq.x193iq5w.x6ikm8r.x10wlt62.xlyipyv.xuxw1ft"
     };
 
-    private static final String FIRST_PHOTO_LOCATOR  = "div.x1lliihq.x1n2onr6.xh8yej3.x4gyw5p.xfllauq.xo2y696.x11i5rnm.x2pgyrj > a > div > div > img";
+    private static final String POST_LOCATOR = "div.x1lliihq.x1n2onr6.xh8yej3.x4gyw5p.xfllauq.xo2y696.x11i5rnm.x2pgyrj > a";
+    private static final String FIRST_PHOTO_LOCATOR  =  "div > div > img";
 
 
     public void parseProfile() throws IOException, InterruptedException {
@@ -48,8 +49,6 @@ public class ProfilePage {
         String avatarSrc = avatar.getAttribute("src");
         FileSystem.createImage(PROFILE_PATH + "\\Avatar.jpg", avatarSrc);
 
-        // TODO: Добавить получение аватара
-
         StringBuilder profileInfo = new StringBuilder();
 
         for (String profileInfoBlock: PROFILE_DATA_LOCATORS){
@@ -68,11 +67,10 @@ public class ProfilePage {
             }
         }
 
-        FileSystem.createTxt(PROFILE_PATH + "\\Profile description.txt", profileInfo.toString());
+        FileSystem.createTxt(PROFILE_PATH + "\\profile_description.txt", profileInfo.toString());
     };
 
     private void scrollProfilePage() throws InterruptedException {
-        System.out.println("SCROLL_STRATEGY = " + SCROLL_STRATEGY);
         if (SCROLL_STRATEGY.equals("inf")){
             scrollProfilePageToTheEndOfPage();
         }
@@ -119,15 +117,20 @@ public class ProfilePage {
     private void parsePosts() throws IOException {
         int postNumber = 0;
 
-        ElementsCollection firstPostsPhotos = $$(FIRST_PHOTO_LOCATOR);
+        ElementsCollection posts = $$(POST_LOCATOR);
 
-        for (SelenideElement firstPhoto: firstPostsPhotos){
+        for (SelenideElement post: posts){
 
             String postPath = BASE_PATH_TO_FOLDER_RESULTS + "\\" + PROFILE_TO_PARSE + "\\" + postNumber;
             FileSystem.createFolder(postPath);
 
+            String postUrl = post.getAttribute("href");
+            FileSystem.createTxt(postPath + "\\post_url.txt", postUrl);
+
+            SelenideElement firstPhoto = post.$(FIRST_PHOTO_LOCATOR);
+
             String postDescription = firstPhoto.getAttribute("alt");
-            FileSystem.createTxt(postPath + "\\Post description.txt", postDescription);
+            FileSystem.createTxt(postPath + "\\post_description.txt", postDescription);
 
             String imgSrc = firstPhoto.getAttribute("src");
             FileSystem.createImage(postPath + "\\image.jpg", imgSrc);
