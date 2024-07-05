@@ -33,6 +33,7 @@ public class ProfilePage {
 
     private static final String OPENED_POST_LOCATOR = "span.x193iq5w.xeuugli.x1fj9vlw.x13faqbe.x1vvkbs.xt0psk2.x1i0vuye.xvs91rp.xo1l8bm.x5n08af.x10wh9bi.x1wdrske.x8viiok.x18hxmgj";
     private static final String OPENED_GALLERY_PHOTO_LOCATOR = "li._acaz > div >div > div > div._aagu > div > img";
+    private static final String OPENED_GALLERY_PHOTO_LOCATOR_THE_ONLY_ONE = "div >div > div > div._aagu > div > img[crossorigin=\"anonymous\"]";
     private static final String OPENED_GALLERY_NEXT_BUTTON_LOCATOR = "button._afxw._al46._al47";
 
 
@@ -198,9 +199,17 @@ public class ProfilePage {
 
                 while (true){
                     Thread.sleep(500);
-                    SelenideElement postPhoto = $$(OPENED_GALLERY_PHOTO_LOCATOR).first();
-                    String imgSrc = postPhoto.getAttribute("src");
-                    FileSystem.createImage(postPath + "\\image" + imgNum + ".jpg", imgSrc);
+
+                    if ($(OPENED_GALLERY_PHOTO_LOCATOR).exists()) {
+                        SelenideElement postPhoto = $$(OPENED_GALLERY_PHOTO_LOCATOR).first();
+                        String imgSrc = postPhoto.getAttribute("src");
+                        FileSystem.createImage(postPath + "\\image" + imgNum + ".jpg", imgSrc);
+                    }
+                    else if ($(OPENED_GALLERY_PHOTO_LOCATOR_THE_ONLY_ONE).exists()){
+                        SelenideElement postPhoto = $$(OPENED_GALLERY_PHOTO_LOCATOR_THE_ONLY_ONE).first();
+                        String imgSrc = postPhoto.getAttribute("src");
+                        FileSystem.createImage(postPath + "\\image" + imgNum + ".jpg", imgSrc);
+                    }
 
                     if ($(OPENED_GALLERY_NEXT_BUTTON_LOCATOR).exists()){
                         $(OPENED_GALLERY_NEXT_BUTTON_LOCATOR).click();
