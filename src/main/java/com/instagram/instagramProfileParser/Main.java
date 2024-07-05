@@ -3,6 +3,8 @@ package com.instagram.instagramProfileParser;
 import com.codeborne.selenide.Configuration;
 import com.instagram.instagramProfileParser.instagramPages.LoginPage;
 import com.instagram.instagramProfileParser.instagramPages.ProfilePage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -19,7 +21,10 @@ public class Main {
     private static String OUTPUT_PATH;
     private static String BROWSER_MODE;
 
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+
     public static void main(String[] args) throws InterruptedException, IOException {
+        logger.info("Starting...");
 
         processCLIArgs(args);
 
