@@ -1,6 +1,7 @@
 package com.instagram.instagramProfileParser;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.WebDriverRunner;
 import com.instagram.instagramProfileParser.instagramPages.LoginPage;
 import com.instagram.instagramProfileParser.instagramPages.ProfilePage;
 import org.slf4j.Logger;
@@ -36,6 +37,7 @@ public class Main {
         ProfilePage profilePage = open("https://www.instagram.com/" + PROFILE_TO_PARSE, ProfilePage.class);
         profilePage.parseProfile();
 
+        WebDriverRunner.closeWebDriver();
     }
 
     private static void setUserLogin(String userLogin) {
