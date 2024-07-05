@@ -2,6 +2,7 @@ package com.instagram.instagramProfileParser.fileSystem;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,8 +13,7 @@ public class FileSystem {
         Files.createDirectories(profilePath);
     }
     public static void createTxt(String filePath, String fileContent){
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath), StandardCharsets.UTF_8))){
             // Записываем содержимое в файл
             writer.write(fileContent);
             System.out.println("File created successfully.");
