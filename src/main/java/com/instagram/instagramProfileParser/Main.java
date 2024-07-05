@@ -21,6 +21,7 @@ public class Main {
     private static String SCROLL_MODE;
     private static String OUTPUT_PATH;
     private static String BROWSER_MODE;
+    private static String GALLERY_MODE;
 
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
@@ -64,6 +65,10 @@ public class Main {
         BROWSER_MODE = browserMode;
     }
 
+    private static void setGalleryMode(String galleryMode) {
+        GALLERY_MODE = galleryMode;
+    }
+
     public static String getOutputPath() {
         return OUTPUT_PATH;
     }
@@ -74,6 +79,10 @@ public class Main {
 
     public static String getScrollMode() {
         return SCROLL_MODE;
+    }
+
+    public static String getGalleryMode() {
+        return GALLERY_MODE;
     }
 
     private static void processCLIArgs(String[] args){
@@ -100,6 +109,10 @@ public class Main {
                         break;
                     case 'M' :
                         setBrowserMode(parameter);
+                        break;
+                    case 'G' :
+                        setGalleryMode(parameter);
+                        break;
                 }
             } else {
                 logger.warn("Cannot read property : {}", argument);
