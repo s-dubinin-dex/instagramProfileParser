@@ -3,6 +3,10 @@ package com.instagram.instagramProfileParser.instagramPages;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import static com.codeborne.selenide.Selenide.page;
 
 public class LoginPage {
     @FindBy(how = How.NAME, using = "username")
@@ -12,7 +16,12 @@ public class LoginPage {
     private SelenideElement passwordField;
 
     @FindBy(xpath = "//button[div[text()='Войти']]")
-    private SelenideElement loginButton;
+    private SelenideElement loginButtonRu;
+
+    @FindBy(xpath = "//button[div[text()='Log in']]")
+    private SelenideElement loginButtonEn;
+
+    private static final Logger logger = LoggerFactory.getLogger(LoginPage.class);
 
     public LoginPage setLogin(String login){
         loginField.setValue(login);
@@ -25,7 +34,13 @@ public class LoginPage {
     }
 
     public LoginPage clickLoginButton(){
-        loginButton.click();
+        if (loginButtonRu.exists()){
+            loginButtonRu.click();
+        } else if(loginButtonEn.exists()){
+            loginButtonEn.click();
+        } else {
+            logger.error("Unable to find \"Log in\" button");
+        }
         return this;
     }
 
