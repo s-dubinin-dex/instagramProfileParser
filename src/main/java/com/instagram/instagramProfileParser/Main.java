@@ -79,27 +79,32 @@ public class Main {
     private static void processCLIArgs(String[] args){
         for (String argument: args){
 
-            String parameter = argument.substring(2);
+            if (argument.charAt(0) == '-'){
+                String parameter = argument.substring(2);
 
-            switch (argument.charAt(1)){
-                case 'L' :
-                    setUserLogin(parameter);
-                    break;
-                case 'P' :
-                    setUserPassword(parameter);
-                    break;
-                case 'T' :
-                    setProfileToParse(parameter);
-                    break;
-                case 'S' :
-                    setScrollStrategy(parameter);
-                    break;
-                case 'O' :
-                    setOutputPath(parameter);
-                    break;
-                case 'M' :
-                    setBrowserMode(parameter);
+                switch (argument.charAt(1)){
+                    case 'L' :
+                        setUserLogin(parameter);
+                        break;
+                    case 'P' :
+                        setUserPassword(parameter);
+                        break;
+                    case 'T' :
+                        setProfileToParse(parameter);
+                        break;
+                    case 'S' :
+                        setScrollStrategy(parameter);
+                        break;
+                    case 'O' :
+                        setOutputPath(parameter);
+                        break;
+                    case 'M' :
+                        setBrowserMode(parameter);
+                }
+            } else {
+                logger.warn("Cannot read property : {}", argument);
             }
+
         }
     }
 
