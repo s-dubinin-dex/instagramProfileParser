@@ -1,6 +1,7 @@
 package com.instagram.instagramProfileParser.instagramPages;
 
 import com.codeborne.selenide.SelenideElement;
+import com.instagram.instagramProfileParser.Timer;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.slf4j.Logger;
@@ -45,8 +46,8 @@ public class LoginPage {
     }
 
     public MainPage login(String login, String password) throws InterruptedException {
-        setLogin(login).setPassword(password).clickLoginButton();
-        Thread.sleep(5000);
+        LoginPage loginPage = setLogin(login).setPassword(password).clickLoginButton();
+        Thread.sleep(Timer.getRandomTimeForLogIn());
         return page(MainPage.class);
     }
 }

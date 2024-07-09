@@ -3,6 +3,7 @@ package com.instagram.instagramProfileParser.instagramPages;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.instagram.instagramProfileParser.Main;
+import com.instagram.instagramProfileParser.Timer;
 import com.instagram.instagramProfileParser.fileSystem.FileSystem;
 
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class ProfilePage {
 
     public void parseProfile() throws IOException, InterruptedException {
 
-        Thread.sleep(5000);
+        Thread.sleep(Timer.getRandomTimeToWaitProfileLoading());
 
         FileSystem.createFolder(this.osProfilePath);
 
@@ -104,7 +105,7 @@ public class ProfilePage {
             executeJavaScript("window.scrollTo(0, document.body.scrollHeight);");
 
             // Ждем некоторое время для подгрузки новых элементов
-            Thread.sleep(2000); // Установите задержку, достаточную для загрузки новых элементов
+            Thread.sleep(Timer.getRandomTimeForScrolling()); // Установите задержку, достаточную для загрузки новых элементов
 
             // Получаем новую высоту страницы
             long newHeight = (long) executeJavaScript("return document.body.scrollHeight");
@@ -131,7 +132,7 @@ public class ProfilePage {
 
             // Прокручиваем страницу вниз
             executeJavaScript("window.scrollTo(0, document.body.scrollHeight);");
-            Thread.sleep(2000);
+            Thread.sleep(Timer.getRandomTimeForScrolling());
 
             // Получаем новую высоту страницы
             long newHeight = (long) executeJavaScript("return document.body.scrollHeight");
@@ -203,7 +204,7 @@ public class ProfilePage {
                 }
 
                 while (true){
-                    Thread.sleep(500);
+                    Thread.sleep(Timer.getRandomTimeToGoToNextPhoto());
 
                     if ($(OPENED_GALLERY_PHOTO_LOCATOR).exists()) {
                         SelenideElement postPhoto = $$(OPENED_GALLERY_PHOTO_LOCATOR).first();
